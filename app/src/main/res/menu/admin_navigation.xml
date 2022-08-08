@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/Ordenes"
+        android:icon="@drawable/ic_ordenes_24"
+        android:title="Ordenes"
+        />
+    <item
+        android:id="@+id/Platos"
+        android:icon="@drawable/ic_menu_24"
+        android:title="Nuevo Platillo"
+        />
+
+    <item
+        android:id="@+id/Crear_Repartidor"
+        android:icon="@drawable/ic_baseline_person_2"
+        android:title="CrearRepartidor"
+        />
+
+    <item
+        android:id="@+id/Cerrar_Sesion1"
+        android:icon="@drawable/ic_baseline_login_24"
+        android:title="Cerrar Sesion"        />
+
+</menu>

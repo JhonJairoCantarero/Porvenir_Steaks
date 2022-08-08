@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/id_ordenes_cliente"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#EFEFEF">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/orderbg">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:text="Datos del cliente"
+            android:textColor="#070707"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.167"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+        <EditText
+            android:id="@+id/txtDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="380dp"
+            android:background="@drawable/custom_input"
+            android:drawableLeft="@drawable/filter_focused"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:gravity="center|start"
+            android:inputType="textMultiLine"
+            android:padding="10dp"
+            android:textColor="#141E27"
+            android:textColorHint="#B3B3B3"
+            app:layout_constraintEnd_toEndOf="@+id/txtNombreCliente"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/txtNombreCliente"
+            app:layout_constraintTop_toBottomOf="@+id/textView11"
+            app:layout_constraintWidth_percent=".8" />
+
+        <Button
+            android:id="@+id/btnUbicacion"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#FF5722"
+            android:drawableLeft="@drawable/ic_baseline_location_on_24"
+            android:onClick="editar"
+            android:paddingLeft="35dp"
+            android:text="Ubicación"
+            android:textAlignment="textStart"
+            app:cornerRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
+
+        <Button
+            android:id="@+id/btntomarpedido"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#FF5722"
+            android:enabled="false"
+            android:onClick="editar"
+            android:text="Tomar Peddido"
+            android:textAlignment="center"
+            app:cornerRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnUbicacion" />
+
+        <Button
+            android:id="@+id/btnentregar"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FF5722"
+            android:enabled="false"
+            android:onClick="editar"
+            android:text="Entregar"
+            android:textAlignment="center"
+            app:cornerRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btntomarpedido" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="./Orden"
+            android:textColor="#fff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.045"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_list2"
+            android:drawablePadding="10dp"
+            android:text="Orden del Cliente"
+            android:textColor="#fff"
+            android:textSize="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView7"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+
+        <EditText
+            android:id="@+id/txtNombrePlato"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="276dp"
+            android:background="@drawable/custom_input"
+            android:drawableLeft="@drawable/food_focused"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:textColor="#141E27"
+            android:textColorHint="#B3B3B3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView11"
+            app:layout_constraintWidth_percent=".8" />
+
+        <EditText
+            android:id="@+id/txtNombreCliente"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="112dp"
+            android:background="@drawable/custom_input"
+            android:drawableLeft="@drawable/name_focused"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:textColor="#141E27"
+            android:textColorHint="#B3B3B3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView11"
+            app:layout_constraintWidth_percent=".8" />
+
+        <EditText
+            android:id="@+id/txtPrecio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="328dp"
+            android:background="@drawable/custom_input"
+            android:drawableLeft="@drawable/money_focused"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:inputType="number"
+            android:padding="10dp"
+            android:textColor="#141E27"
+            android:textColorHint="#B3B3B3"
+            app:layout_constraintEnd_toEndOf="@+id/txtTelefono"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/txtTelefono"
+            app:layout_constraintTop_toBottomOf="@+id/textView11"
+            app:layout_constraintWidth_percent=".8" />
+
+        <EditText
+            android:id="@+id/txtTelefono"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/custom_input"
+            android:drawableLeft="@drawable/phone_focused"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:gravity="center|start"
+            android:inputType="textMultiLine"
+            android:padding="10dp"
+            android:textColor="#141E27"
+            android:textColorHint="#B3B3B3"
+            app:layout_constraintEnd_toEndOf="@+id/txtNombreCliente"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/txtNombreCliente"
+            app:layout_constraintTop_toBottomOf="@+id/txtNombreCliente"
+            app:layout_constraintWidth_percent=".8" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="236dp"
+            android:text="Datos del Pedido"
+            android:textColor="#050505"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.151"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

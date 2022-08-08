@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Menu"
+        android:id="@+id/cliente_home"
+        android:icon="@drawable/ic_menu_24" />
+
+
+    <item
+        android:title="Pedidos"
+        android:id="@+id/cliente_Menu"
+        android:icon="@drawable/ic_ordenes_24"/>
+
+    <item
+        android:title="Perfil"
+        android:id="@+id/cliente_perfil"
+        android:icon="@drawable/ic_perfil_24"
+        />
+</menu>
