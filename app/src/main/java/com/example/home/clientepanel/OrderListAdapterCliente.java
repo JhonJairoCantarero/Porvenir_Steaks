@@ -5,10 +5,12 @@ import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +19,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.home.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,17 +37,27 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 
 public class OrderListAdapterCliente extends RecyclerView.Adapter<OrderListAdapterCliente.MyViewHolder>{
+
+
+    private EditText msg;
+    FirebaseMessaging mss;
 
     Context context;
     ArrayList<Platillo> orderArrayList;
@@ -98,6 +117,11 @@ public class OrderListAdapterCliente extends RecyclerView.Adapter<OrderListAdapt
         ImageView imagen;
         Button añadir;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseMessaging msss;
+        private String FCM_API = "https://fcm.googleapis.com/fcm/send";
+        private String serverKey = "key=AAAAg5BBu6U:APA91bHvg_nO2fxmQ0nv7FTojd7Hw6nvXxjFT4K2X4opbiHgzYo5vqG5X4Xu7zF8u_vf8a2IDxKaaYaxVj8URYVkjTHQJnxFSmMuBePQ9Naaof3si6uEbDNXDnLZq6RATuL3PZiCelsX";
+        private String contentType = "application/json";
+        //Content-Type:application/json
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -106,6 +130,10 @@ public class OrderListAdapterCliente extends RecyclerView.Adapter<OrderListAdapt
             descripcion = itemView.findViewById(R.id.txtdescripcionD);
             imagen = itemView.findViewById(R.id.imgItem);
             añadir = itemView.findViewById(R.id.btnañadirorden);
+
+            FirebaseMessaging.getInstance().subscribeToTopic("/topics/Enter_your_topic_name");
+
+
             añadir.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -146,6 +174,22 @@ public class OrderListAdapterCliente extends RecyclerView.Adapter<OrderListAdapt
                                                                     if(task.isSuccessful())
                                                                     {
                                                                         Toast.makeText(itemView.getContext(), "Pedido Realizado Correctamente", Toast.LENGTH_LONG).show();
+                                                                        String topic = "/topics/Enter_your_topic_name";
+                                                                        JSONObject notification = new JSONObject();
+                                                                        JSONObject notifcationBody = new JSONObject();
+
+                                                                        try {
+                                                                            notifcationBody.put("title", "Porvenir Steaks");
+                                                                            notifcationBody.put("message", "Tu Pedido Esta En Cocina") ;  //Enter your notification message
+                                                                            notification.putOpt("to", topic);
+                                                                            notification.put("data", notifcationBody);
+                                                                            Log.e("TAG", "try");
+                                                                        } catch (JSONException e) {
+                                                                            Log.e("TAG", "onCreate: " + e.getMessage());
+                                                                        }
+
+                                                                        sendNotification(notification,itemView);
+
                                                                     }
                                                                     else
                                                                     {
@@ -158,6 +202,7 @@ public class OrderListAdapterCliente extends RecyclerView.Adapter<OrderListAdapt
                                                     }
                                                 }
                                             });
+
 
                                 }
                             })
@@ -172,5 +217,102 @@ public class OrderListAdapterCliente extends RecyclerView.Adapter<OrderListAdapt
 
             });
         }
-    }
+
+        private void sendNotification(JSONObject notification, View itemView) {
+            Log.e("TAG", "sendNotification");
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                    FCM_API,
+                    notification,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.i("TAG","onResponse:"+response);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(itemView.getContext(), "Error Request", Toast.LENGTH_SHORT).show();
+                            Log.i("TAG", "onErrorResponse: Didn't work");
+                        }
+
+                        //public Map<String, String> getHeaders() throws AuthFailureError{
+
+                    }
+            ) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError{
+                HashMap<String, String> params = new HashMap<>();
+                params.put("Authorization", serverKey);
+                params.put("Content-Type", contentType);
+                return params;
+            }
+
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(itemView.getContext().getApplicationContext());
+            requestQueue.add(jsonObjectRequest);
+        }
+/*
+
+
+        private void sendNotification(JSONObject notification, View itemView) {
+            Log.e("TAG", "sendNotification");
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                        Log.i("TAG","onResponse:"+response);
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(itemView.getContext(), "Error Request", Toast.LENGTH_SHORT).show();
+                    Log.i("TAG", "onErrorResponse: Didn't work");
+                }
+            }
+            );
+        }
+
+
+
+        private void sendNotification(JSONObject notification, View itemView) {
+            Log.e("TAG", "sendNotification");
+            JsonObjectRequest jsonObjectRequest =  JsonObjectRequest(FCM_API, notification,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.i("TAG", "onResponse: "+response);
+                        }
+                    },
+                    new Response.ErrorListener(){
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(itemView.getContext(), "Error Request", Toast.LENGTH_SHORT).show();
+                            Log.i("TAG", "onErrorResponse: Didn't work");
+                        }) {
+
+                        @Override
+                            public Map<String, String> getHeaders() {
+                                HashMap<String, String> params = new HashMap<>();
+                                params.put("Authorization",serverKey);
+                                params.put("Content-Type",contentType);
+                                return params;
+
+                        }
+                            RequestQueue requestQueue = Volley.newRequestQueue(itemView.getContext().getApplicationContext());
+                            requestQueue.add(jsonObjectRequest);
+
+
+                        }
+        //RequestQueue requestQueue = Volley.newRequestQueue(itemView.getContext().getApplicationContext());
+            //requestQueue.add(jsonObjectRequest);
+        }
+
+            );
+    }*/
+
+
+}
 }

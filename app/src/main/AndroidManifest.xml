@@ -28,6 +28,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Home"
         tools:targetApi="31">
+        <service
+            android:name=".MyServiceNotification"
+            android:enabled="true"
+            android:exported="true"></service>
+        <service
+            android:name=".MyService"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".ratingbar"
             android:exported="false" />

@@ -3,6 +3,7 @@ package com.example.home.deliverypanel;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.home.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,9 +32,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 
 public class DeliveryOrdenesClienteFragment extends Fragment {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -36,12 +49,17 @@ public class DeliveryOrdenesClienteFragment extends Fragment {
     private String cliente, estado;
     private Long fecha;
     DocumentReference pedido;
+    String email;
 
     ArrayList<OrdenesDelivery> orderArrayList;
     OrderListAdapterDelivery myAdapter;
     Hashtable<String, Object> Clienteorden = new Hashtable<>();
     Hashtable<String, Object>  orden = new Hashtable<>();
 
+
+    private String FCM_API = "https://fcm.googleapis.com/fcm/send";
+    private String serverKey = "key=AAAAg5BBu6U:APA91bHvg_nO2fxmQ0nv7FTojd7Hw6nvXxjFT4K2X4opbiHgzYo5vqG5X4Xu7zF8u_vf8a2IDxKaaYaxVj8URYVkjTHQJnxFSmMuBePQ9Naaof3si6uEbDNXDnLZq6RATuL3PZiCelsX";
+    private String contentType = "application/json";
 
 
     @Nullable
@@ -99,6 +117,22 @@ public class DeliveryOrdenesClienteFragment extends Fragment {
                         if (task.isSuccessful()) {
                             tomarpedido.setEnabled(false);
                             Toast.makeText(getContext(), "Orden asignada correctamente", Toast.LENGTH_LONG).show();
+
+                            String topic = "/topics/"+email;
+                            JSONObject notification = new JSONObject();
+                            JSONObject notifcationBody = new JSONObject();
+
+                            try {
+                                notifcationBody.put("title", "Porvenir Steaks");
+                                notifcationBody.put("message", "Tu Pedido Esta En Camino") ;  //Enter your notification message
+                                notification.putOpt("to", topic);
+                                notification.put("data", notifcationBody);
+                                Log.e("TAG", "try");
+                            } catch (JSONException e) {
+                                Log.e("TAG", "onCreate: " + e.getMessage());
+                            }
+
+                            sendNotification(notification,v);
                         } else {
                             Toast.makeText(getContext(), "No se puedo asignar la orden", Toast.LENGTH_LONG).show();
                         }
@@ -133,6 +167,44 @@ public class DeliveryOrdenesClienteFragment extends Fragment {
 
 
         return root;
+    }
+
+
+    private void sendNotification(JSONObject notification, View itemView) {
+        Log.e("TAG", "sendNotification");
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                FCM_API,
+                notification,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i("TAG","onResponse:"+response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(itemView.getContext(), "Error Request", Toast.LENGTH_SHORT).show();
+                        Log.i("TAG", "onErrorResponse: Didn't work");
+                    }
+
+                    //public Map<String, String> getHeaders() throws AuthFailureError{
+
+                }
+        ) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("Authorization", serverKey);
+                params.put("Content-Type", contentType);
+                return params;
+            }
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(itemView.getContext().getApplicationContext());
+        requestQueue.add(jsonObjectRequest);
     }
 
 
@@ -176,6 +248,7 @@ public class DeliveryOrdenesClienteFragment extends Fragment {
 
                             if(!Clienteorden.isEmpty()){
                                 //Inicialiazar valores
+                                email = Clienteorden.get("usuario").toString();
                                 nombrecliente.setText(Clienteorden.get("nombre").toString());
                                 telefono.setText(Clienteorden.get("telefono").toString());
 

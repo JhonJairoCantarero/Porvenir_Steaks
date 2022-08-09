@@ -6,13 +6,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,15 +23,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.home.FragmentIntro.OnBoardingFragment1;
-import com.example.home.FragmentIntro.OnBoardingFragment2;
-import com.example.home.FragmentIntro.OnBoardingFragment3;
-import com.example.home.adminpanel.Repartidor;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.home.databinding.ActivityMainBinding;
+import com.example.home.databinding.PerfilRBinding;
 import com.example.home.login.Recuperar_Clave;
 import com.example.home.login.RegistroActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,6 +46,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //public class MainActivity extends AppCompatActivity {
@@ -58,47 +71,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String us = "";
     String rol = "";
     String uid = "";
-
     ImageView logo,splashImg;
     TextView appName;
     CardView cardView;
     MediaPlayer mediaPlayer;
-
     private static final int NUM_PAGES = 3;
     private ViewPager viewPager;
    // private MainActivity.ScreenSlidePagerAdapter pagerAdapter;
-
     Animation anim;
+    private com.example.home.databinding.ActivityMainBinding binding;
+
+
+    com.example.home.databinding.ActivityMainBinding ActivityMainBinding ;
+
+    /*
+    private RequestQueue requestQueue(){
+        Volley.newRequestQueue(this,getApplicationContext());
+    }*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         correo = (EditText) findViewById(R.id.NombreLogin);
         contrasena = (EditText) findViewById(R.id.ClaveLogin);
 
-        //Inicializando elementos del Splash
-        /*logo = findViewById(R.id.logo);
-        splashImg = findViewById(R.id.img);
-        appName = findViewById(R.id.app_name);
-        cardView = findViewById(R.id.lotiecontainer);
-        mediaPlayer = MediaPlayer.create(this,R.raw.sound2);
-        mediaPlayer.start();
-
-        //Cargando los elementos de SlidePager
-        viewPager = findViewById(R.id.pager);
-        pagerAdapter = new MainActivity.ScreenSlidePagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(pagerAdapter);
-
-        //Animacion del ViewPager
-        anim = AnimationUtils.loadAnimation(this,R.anim.o_b_anim);
-        viewPager.startAnimation(anim);
-
-        //Animacion al Spash
-        splashImg.animate().translationY(-2700).setDuration(1000).setStartDelay(5000);
-        logo.animate().translationY(2200).setDuration(1000).setStartDelay(5000);
-        appName.animate().translationY(2200).setDuration(1000).setStartDelay(5000);
-        cardView.animate().translationY(2200).setDuration(1000).setStartDelay(5000);*/
+        //msg = (EditText)  findViewById(R.id.msg);
 
         contrasena.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -139,7 +139,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAuth = FirebaseAuth.getInstance();
 
 
-    }
+//        ViewDataBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+
+
+
+       }
+
 
 
     @Override
@@ -270,33 +276,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-//    private class  ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-//
-//        public ScreenSlidePagerAdapter(@NonNull FragmentManager fm) {
-//            super(fm);
-//        }
-//
-//        @NonNull
-//        @Override
-//        public Fragment getItem(int position) {
-//            switch (position){
-//                case 0:
-//                    OnBoardingFragment1 tab1 = new OnBoardingFragment1();
-//                    return tab1;
-//                case 1:
-//                    OnBoardingFragment2 tab2 = new OnBoardingFragment2();
-//                    return tab2;
-//                case 2:
-//                    OnBoardingFragment3 tab3 = new OnBoardingFragment3();
-//                    return tab3;
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return NUM_PAGES;
-//        }
-//    }
+
 
 }

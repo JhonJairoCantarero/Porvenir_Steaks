@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/drawable/ic_baseline_delivery_dining_24.xml" value="0.1535" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/activity_cliente_panel.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/activity_intro.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/activity_main.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/cliente_orders_item.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/fragment_admin_ordenes.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/fragment_admin_perfil.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/fragment_cliente_home.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/fragment_clientecarrito.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/fragment_clienteorden.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/fragment_clienteperfil.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/fragment_clientetrack.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/fragment_deliveryenvioordenes.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/fragment_deliveryordenes.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/fragment_deliveryordenescliente.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/fragment_perfil.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/fragment_perfil_r.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/orders_item.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/layout/orders_item_admin.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/elvis/Desktop/Home3-Copia/app/src/main/res/menu/cliente_navigation.xml" value="0.25052083333333336" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

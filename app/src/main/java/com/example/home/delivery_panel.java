@@ -49,6 +49,8 @@ public class delivery_panel extends AppCompatActivity implements BottomNavigatio
         obtenerRepartidor();
     }
 
+
+
     private void actualizarUbicacion() {
         handler.postDelayed(runnable = new Runnable() {
             @Override
